@@ -4,8 +4,53 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "56cce84820036ad4bed77a3b6f2dc3f8",
+    "hash": "98ad43f149e41b2ed05ecd31a8e05e45",
     "packages": [
+        {
+            "name": "firebase/php-jwt",
+            "version": "dev-master",
+            "target-dir": "Firebase/PHP-JWT",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "724b1fcfb88b7bbbbd92fddd5deb7518c3988267"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/724b1fcfb88b7bbbbd92fddd5deb7518c3988267",
+                "reference": "724b1fcfb88b7bbbbd92fddd5deb7518c3988267",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Authentication/",
+                    "Exceptions/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2015-02-12 15:57:00"
+        },
         {
             "name": "php-activerecord/php-activerecord",
             "version": "dev-master",
@@ -97,7 +142,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "php-activerecord/php-activerecord": 20
+        "php-activerecord/php-activerecord": 20,
+        "firebase/php-jwt": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

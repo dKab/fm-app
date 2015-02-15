@@ -1,6 +1,7 @@
 {
   "require": {
     "slim/slim": "2.*",
-    "php-activerecord/php-activerecord": "dev-master"
+    "php-activerecord/php-activerecord": "dev-master",
+    "firebase/php-jwt": "dev-master"
   }
 }
