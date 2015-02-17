@@ -2,7 +2,8 @@
 require_once 'vendor/php-activerecord/php-activerecord/lib/Utils.php';
 use \ActiveRecord\Utils as Utils;
 class JSONUtils extends Utils {
-  public static function resultsToJSON($resultArray) {
+
+  public static function ARresultsToJSON($resultArray) {
     $arr = array();
       if(count($resultArray)>0){
         foreach($resultArray as $row){
@@ -11,4 +12,5 @@ class JSONUtils extends Utils {
        }
     return json_encode($arr);
   }
+
 }
