@@ -7,6 +7,7 @@ require_once 'JSONUtils.php';
 
 $app = new \Slim\Slim();
 $app->jwtKey ='3ewv2%eyufq!ib=-0@kdz194#a5t)3rtu!=a=)7sx=_-=6^q)r';
+$app->name = 'fm-app';
 
 ActiveRecord\Config::initialize(function($cfg)
  {
@@ -22,62 +23,36 @@ ActiveRecord\Config::initialize(function($cfg)
      if ($user->is_valid()) {
         $user->password = password_hash($user->password, PASSWORD_DEFAULT);
         //add new User to database and provide token with his credentials
-        $token = [
-            "iss" => "fm-app",//TODO change to actual url
-            "iat" => time(),
-            "exp" => time() + (4 * 7 * 24 * 60 * 60), // lifetime of this jwt is four weeks
-            'sub' => $user->email,
-            'user' => $user->name
-        ];
-        $jwt = JWT::encode($token, $app->jwtKey);
-        $responseBody['token'] = $jwt;
+        $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
         $responseBody['status'] = 'success';
-        $responseBody['message'] = "Welcome aboard, {$user->name}!";
      } else {
          $responseBody['status'] = 'error';
-         $responseBody['message'] = $user->errors->errors();
+         $responseBody['errors'] = $user->errors->errors();
      }
-     echoJSON(200, $responseBody);
+      echoJSON(200, $responseBody);
   });
 
   $app->post('/login', function () use ($app) {
     $responseBody = [];
     $req = json_decode($app->request->getBody());
     $user = User::find_by_email($req->email);
-    if ($user != null) {
-      $passwordMatch = password_verify($req->password, $user->password);
-      if ($passwordMatch) {
-          $token = [
-            "iss" => "fm-app",//TODO change to actual url
-            "iat" => time(),
-            "exp" => time() + (4 * 7 * 24 * 60 * 60), // lifetime of this jwt is four weeks
-            'sub' => $user->email,
-            'user' => $user->name
-          ];
-          $jwt = JWT::encode($token, $app->jwtKey);
-          $responseBody['token'] = $jwt;
-          $responseBody['message'] = "Nice to see you come back, {$user->name}";
-          $responseBody['status'] = 'success';
+    if ($user !== null && password_verify($req->password, $user->password) ) {
+          $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
           echoJSON(200, $responseBody);
-      }
-    }
-    if ($user == null || (isset($passwordMatch) && !$passwordMatch)) {
-        $responseBody['message'] = "Email or password doesn't match";
+    } else {
         $responseBody['status'] = 'error';
         echoJSON(401, $responseBody);
     }
   }
 
- $app->get('/categories', function () use ($app) { //TODO add middleware that verifies token
-     $categories = Category::all();
+ $app->get('/categories', AuthHelper::checkAuthorized, function () use ($app) {
+     $email = AuthHelper::getEmail();
+     $categories = Category::all(); //TODO find only categories which belong to the user
      echo JSONUtils::ARresultsToJSON($categories);
  });
 
-function echoJSON($status_code, $responseBody) {
-     $app = \Slim\Slim::getInstance();
-     $app->response->setStatus($status_code);
-     $app->response->headers->set('Content-Type', 'application/json');
-     echo json_encode($responseBody);
- }
+
+
+
 
  $app->run();
