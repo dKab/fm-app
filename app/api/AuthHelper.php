@@ -17,7 +17,7 @@ class AuthHelper {
         $valid = true;
    }
    if (!$valid)
-    $app->halt(401);
+    $app->halt(403);
   }
 
   public static function getEmail() {

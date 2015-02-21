@@ -47,7 +47,7 @@ ActiveRecord\Config::initialize(function($cfg)
 
  $app->get('/categories', AuthHelper::checkAuthorized, function () use ($app) {
      $email = AuthHelper::getEmail();
-     $categories = Category::all(); //TODO find only categories which belong to the user
+     $categories = Category::all(['joins'=>['user']], ['conditions'=>['user_email = ?', $email]]);
      echo JSONUtils::ARresultsToJSON($categories);
  });
 
