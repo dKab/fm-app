@@ -386,7 +386,7 @@ module.exports = function (grunt) {
     karma: {
       unit: {
         configFile: 'test/karma.conf.js',
-        singleRun: true
+        singleRun: false
       }
     },
     protractor: {
@@ -424,8 +424,7 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'autoprefixer',
-    'php:test',
-    'karma',
+    'karma'
   ]);
 
 

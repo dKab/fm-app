@@ -1,0 +1,31 @@
+<form novalidate name="form">
+  <div class="form-group">
+    <input ng-model="name" placeholder="Ваше имя"
+         required="true"
+         ng-minlength="3"
+         name="name"
+    ></div>
+  <div class="form-group"><input ng-model="email" placeholder="Email"
+         required=""
+         type="email"
+    ></div>
+  <div class="form-group"><input
+    ng-model="password"
+    placeholder="Пароль"
+    type="password"
+    required=""
+    ></div>
+  <div class="form-group"><input
+    placeholder="Повторите пароль"
+    required=""
+    ng-model="verify"
+    type="password"
+    name="password-repeat"
+    value-match="password"
+    ></div>
+  <button class="btn-success btn-block btn-lg"
+      ng-click="logState(form)"
+      <!--ng-disabled="form.$invalid"-->
+    >Зарегистрироваться</button>
+</form>
+

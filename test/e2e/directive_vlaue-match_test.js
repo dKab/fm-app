@@ -13,7 +13,7 @@ describe('ValueMatch directive', function() {
 
     browser.get('http://localhost:9000/#/signup');
 
-    var orig = element(by.id('pass')),
+    var orig = element(by.model('password')),
         tween = element(by.model('verify'));
 
     expect(hasClass(tween, 'ng-invalid-value-match')).toBe(false);
