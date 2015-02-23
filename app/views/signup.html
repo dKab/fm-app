@@ -2,7 +2,7 @@
   <div class="form-group">
     <input ng-model="name" placeholder="Ваше имя"
          required="true"
-         ng-minlength="3"
+         ng-minlength="6"
          name="name"
     ></div>
   <div class="form-group"><input ng-model="email" placeholder="Email"
@@ -24,8 +24,10 @@
     value-match="password"
     ></div>
   <button class="btn-success btn-block btn-lg"
-      ng-click="logState(form)"
+      ng-click="signup()"
       ng-disabled="form.$invalid"
     >Зарегистрироваться</button>
+  <div class="errors" ng-show="failure">Ошибки: <pre>{{ errors | json  }}</pre> </div>
 </form>
+
 

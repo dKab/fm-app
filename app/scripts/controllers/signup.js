@@ -8,17 +8,18 @@
  * Controller of the fmAppApp
  */
 angular.module('fmAppApp')
-  .controller('SignupCtrl', function ($scope, $http) {
-    var user = {};
-    user.name = $scope.name;
-    user.email = $scope.email;
-    user.password = $scope.password;
-
+  .controller('SignupCtrl', function ($scope, $http, $location) {
     $scope.signup = function () {
-      $http.post('/api/signup', user).success(function(data, status) {
+      $http.post('/api/signup', {
+        name: $scope.name,
+        email: $scope.email,
+        password: $scope.password
+      }).success(function(data) {
         localStorage.setItem('authToken', data.token);
-      }).error(function(data, status) {
-
+        $location.path('/');
+      }).error(function(data) {
+        $scope.failure = true;
+        $scope.errors = data.errors;
       });
     };
 

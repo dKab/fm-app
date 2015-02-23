@@ -3,7 +3,6 @@ require_once 'vendor/slim/slim/Slim/Slim.php';
 require_once 'vendor/firebase/php-jwt/Firebase/PHP-JWT/Authentication/JWT.php';
 
 use \Slim\Slim;
-use JWT;
 
 class AuthHelper {
 
@@ -35,7 +34,7 @@ class AuthHelper {
       "iss" => $app->name,
       "iat" => time(),
       "exp" => time() + (4 * 7 * 24 * 60 * 60), // lifetime of this jwt is four weeks
-      'sub' => $email
+      'sub' => $email,
       'user' => $name ];
       $jwt = JWT::encode($token, $app->jwtKey);
       return $jwt;
