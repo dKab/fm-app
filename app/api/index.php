@@ -25,6 +25,8 @@ ActiveRecord\Config::initialize(function($cfg)
         $user->password = password_hash($user->password, PASSWORD_DEFAULT);
         //add new User to database and provide token with his credentials
         $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
+        $responseBody['name'] = $user->name;
+        $responseBody['id'] = $user->id;
         JSONUtils::sendJSON(201, $responseBody);
      } else {
          $responseBody['errors'] = $user->errors->to_array();
@@ -38,6 +40,8 @@ ActiveRecord\Config::initialize(function($cfg)
     $user = User::find_by_email($req->email);
     if ($user !== null && password_verify($req->password, $user->password) ) {
           $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
+          $responseBody['name'] = $user->name;
+          $responseBody['id'] = $user->id;
           JSONUtils::sendJSON(200, $responseBody);
     } else {
         $responseBody['status'] = 'error';

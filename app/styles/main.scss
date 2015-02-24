@@ -10,10 +10,33 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
     @include box-shadow($shadow);
   }
 }
+/**
+*Sticky footer styles
+*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  left:0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+}
 
-form[name=form] {
+/**
+*Application custom styles
+*/
+
+form[name=signup-form], form[name=login-form] {
   max-width: 300px;
-  margin: 0 auto;
+  margin: 20% auto 0;
   padding: 20px;
 
   input {
@@ -29,5 +52,9 @@ form[name=form] {
   }
 }
 
+.footer {
+  padding: 25px 0;
+  text-align: center;
+}
 
 

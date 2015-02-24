@@ -43,7 +43,7 @@ describe('Controller: SignupCtrl', function () {
         spyOn(location, 'path');
         scope.signup();
         mockBackend.flush();
-        expect(location.path).toHaveBeenCalledWith('/');
+        expect(location.path).toHaveBeenCalledWith('#');
     }));
 
     it('should assign status variable `failure` to the scope in case of error', inject(function($controller) {
