@@ -12,7 +12,8 @@ class User extends ActiveRecord\Model {
           ['password', 'message'=>'User should have a password']
       ];
     static $validates_size_of = [
-        ['password', 'minimum' => 6, 'message'=>'is too short']
+        ['password', 'minimum' => 6, 'message'=>'is too short'],
+        ['name', 'minimum'=>3, 'message'=>'is too short']
     ];
 //    static $validates_format_of = [
 //      ['email', 'with' =>

@@ -23,6 +23,7 @@ angular.module('fmAppApp')
       logOut: function() {
         // clear current_user data, unset logged in status, etc.
           currentUser = undefined;
+        localStorage.removeItem('authToken');
       },
 
       isSignedIn: function() {

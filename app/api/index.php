@@ -23,6 +23,7 @@ ActiveRecord\Config::initialize(function($cfg)
      $user = User::create($req);
      if ($user->is_valid()) {
         $user->password = password_hash($user->password, PASSWORD_DEFAULT);
+        $user->save();
         //add new User to database and provide token with his credentials
         $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
         $responseBody['name'] = $user->name;
@@ -37,6 +38,7 @@ ActiveRecord\Config::initialize(function($cfg)
   $app->post('/login', function () use ($app) {
     $responseBody = [];
     $req = json_decode($app->request->getBody());
+    //file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/1.txt", print_r($req, true));
     $user = User::find_by_email($req->email);
     if ($user !== null && password_verify($req->password, $user->password) ) {
           $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
@@ -44,7 +46,7 @@ ActiveRecord\Config::initialize(function($cfg)
           $responseBody['id'] = $user->id;
           JSONUtils::sendJSON(200, $responseBody);
     } else {
-        $responseBody['status'] = 'error';
+        $responseBody['error'] = 'Invalid Email or password';
         JSONUtils::sendJSON(401, $responseBody);
     }
   });

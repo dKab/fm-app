@@ -12,7 +12,7 @@ angular.module('fmAppApp')
 
     var userService = UserService;
 
-    $scope.signup = function () {
+    $scope.doSignup = function () {
       $http.post('/api/signup', {
         name: $scope.name,
         email: $scope.email,

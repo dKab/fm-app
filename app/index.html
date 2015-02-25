@@ -25,10 +25,10 @@
           <li ng-repeat="route in routes" ng-class="{ active: isActive(route.path) }"><a ng-href="{{ route.path }}" >{{route.name | capitalize }}</a></li>
           <li ng-if="isSignedIn()" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-            {{ name }} <span class="caret"></span>
+            Me <span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
-            <li ><a  ng-click="logout">Logout</a></li>
+            <li ><a  ng-click="logout()">Logout</a></li>
           </ul>
           </li>
         </ul>

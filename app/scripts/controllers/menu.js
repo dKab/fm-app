@@ -31,7 +31,6 @@ angular.module('fmAppApp')
               name: 'categories'
           }
         ];
-    console.log($location.path());
       $scope.navClass = function(path) {
         return ($location.path() == path.substr(1)) ? 'active' : '';
       };
@@ -41,7 +40,7 @@ angular.module('fmAppApp')
 
       $scope.routes = (user.isSignedIn()) ? privateRoutes : publicRoutes;
       if (user.isSignedIn()) {
-        $scope.name = user.currentUser().name;
+        //$scope.name = user.currentUser().name;
       }
 
   });

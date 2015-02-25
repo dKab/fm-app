@@ -13,6 +13,11 @@ describe('Controller: SignupCtrl', function () {
       scope = $rootScope.$new();
     }));
 
+    afterEach(function() {
+      mockBackend.verifyNoOutstandingExpectation();
+      mockBackend.verifyNoOutstandingRequest();
+    });
+
     it('should send POST request with user data to the server',
       inject (function($controller) {
         scope.name = 'John';
@@ -21,7 +26,7 @@ describe('Controller: SignupCtrl', function () {
         ctrl = $controller('SignupCtrl', { $scope: scope });
         mockBackend.expectPOST('/api/signup',
           {name:'John', email: 'some@email', password: 'somePass' }).respond(201, '');
-        scope.signup();
+        scope.doSignup();
         mockBackend.flush();
       }));
 
@@ -30,8 +35,8 @@ describe('Controller: SignupCtrl', function () {
       var token = 'asdfasfgegr';
       expect(localStorage.getItem('authToken')).toBeNull();
       ctrl = $controller('SignupCtrl', {$scope: scope});
-      mockBackend.expectPOST('/api/signup').respond(201, {token: token});
-      scope.signup();
+      mockBackend.whenPOST('/api/signup').respond(201, {token: token});
+      scope.doSignup();
       mockBackend.flush();
       expect(localStorage.getItem('authToken')).toBe(token);
     }));
@@ -39,9 +44,9 @@ describe('Controller: SignupCtrl', function () {
     it('should change location to `/` in case  of success', inject(function($location, $controller) {
         var location = $location;
         ctrl = $controller('SignupCtrl', { $scope: scope });
-        mockBackend.expectPOST('/api/signup').respond(201, '');
+        mockBackend.whenPOST('/api/signup').respond(201, '');
         spyOn(location, 'path');
-        scope.signup();
+        scope.doSignup();
         mockBackend.flush();
         expect(location.path).toHaveBeenCalledWith('#');
     }));
@@ -53,10 +58,10 @@ describe('Controller: SignupCtrl', function () {
          name: 'too short'
        }
       };
-      mockBackend.expectPOST('/api/signup').respond(422, errors);
+      mockBackend.whenPOST('/api/signup').respond(422, errors);
       expect(scope.failure).not.toBeDefined();
       expect(scope.errors).not.toBeDefined();
-      scope.signup();
+      scope.doSignup();
       mockBackend.flush();
       expect(scope.failure).toBe(true);
       expect(scope.errors).toEqual({name: 'too short'});

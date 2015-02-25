@@ -5,18 +5,81 @@ describe('Controller: LoginCtrl', function () {
   // load the controller's module
   beforeEach(module('fmAppApp'));
 
-  var LoginCtrl,
-    scope;
+  var LoginCtrl, userService,
+    scope, mockBackend, token;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope, _$httpBackend_) {
+    mockBackend = _$httpBackend_;
     scope = $rootScope.$new();
     LoginCtrl = $controller('LoginCtrl', {
       $scope: scope
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+  beforeAll(function() {
+    if (localStorage.getItem('authToken') !== null) {
+        token = localStorage.getItem('authToken');
+    }
   });
+
+  afterEach(function() {
+    mockBackend.verifyNoOutstandingExpectation();
+    mockBackend.verifyNoOutstandingRequest();
+  });
+
+  afterAll(function() {
+    if (token !== undefined) {
+      localStorage.setItem('authToken', token);
+    }
+  });
+
+  it('should send POST request with login and password to the server', function () {
+      mockBackend.expectPOST('/api/login', {email: 'someEmail', password: 'somePass'})
+          .respond(200, '');
+      scope.email = 'someEmail';
+      scope.password = 'somePass';
+      scope.doLogin();
+      mockBackend.flush();
+  });
+
+  it('should save token to localstorage in case of success', function() {
+    mockBackend.whenPOST('/api/login').respond(200,{token: 'xxx'});
+    localStorage.removeItem('authToken');
+    expect(localStorage.getItem('authToken')).toBeNull();
+    scope.doLogin();
+    mockBackend.flush();
+    expect(localStorage.getItem('authToken')).toBe('xxx');
+  });
+
+  it('should set current user on UserService in case of success',
+    inject(function($injector) {
+      var UserService = function() {
+        return $injector.get('UserService');
+      };
+      userService = UserService();
+      spyOn(userService, 'setUser');
+      var response = {name: 'name', 'id': 'id' };
+      mockBackend.whenPOST('/api/login').respond(response);
+      scope.doLogin();
+      mockBackend.flush();
+      expect(userService.setUser).toHaveBeenCalledWith(response);
+    }));
+
+  it('should redirect to home path in case of success', inject(function($location) {
+      mockBackend.whenPOST('/api/login').respond(200, '');
+      spyOn($location, 'path');
+      scope.doLogin();
+      mockBackend.flush();
+      expect($location.path).toHaveBeenCalledWith('#');
+  }));
+
+  it('should set `error` property of the scope to true in case of error', function() {
+    mockBackend.whenPOST('/api/login').respond(401, { error: 'oh noez! error occurred!'});
+    expect(scope.error).toBeUndefined();
+    scope.doLogin();
+    mockBackend.flush();
+    expect(scope.error).toBe('oh noez! error occurred!');
+  });
+
 });
