@@ -25,7 +25,7 @@ ActiveRecord\Config::initialize(function($cfg)
         $user->password = password_hash($user->password, PASSWORD_DEFAULT);
         $user->save();
         //add new User to database and provide token with his credentials
-        $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
+        $responseBody['token'] = AuthHelper::generateToken($user->id);
         $responseBody['name'] = $user->name;
         $responseBody['id'] = $user->id;
         JSONUtils::sendJSON(201, $responseBody);
@@ -41,7 +41,7 @@ ActiveRecord\Config::initialize(function($cfg)
     //file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/1.txt", print_r($req, true));
     $user = User::find_by_email($req->email);
     if ($user !== null && password_verify($req->password, $user->password) ) {
-          $responseBody['token'] = AuthHelper::generateToken($user->email, $user->name);
+          $responseBody['token'] = AuthHelper::generateToken($user->id);
           $responseBody['name'] = $user->name;
           $responseBody['id'] = $user->id;
           JSONUtils::sendJSON(200, $responseBody);
@@ -53,11 +53,10 @@ ActiveRecord\Config::initialize(function($cfg)
 
 
  $app->get('/categories/', function() { AuthHelper::checkAuthorized(); } , function () use ($app) {
-     $email = AuthHelper::getEmail();
-     $categories = Category::all(['joins'=>['user']], ['conditions'=>['user_email = ?', $email]]);
-     //$categories = Category::all();
+     $categories = Category::all(['joins'=>['user']], ['conditions'=>['user_id = ?', $app->userId]]);
      echo JSONUtils::ARresultsToJSON($categories);
  });
+ //TODO operations model, operations route (or main route)
 
 
 

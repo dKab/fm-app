@@ -20,19 +20,15 @@
     <![endif]-->
 
     <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right" ng-controller="MenuCtrl">
-          <li ng-repeat="route in routes" ng-class="{ active: isActive(route.path) }"><a ng-href="{{ route.path }}" >{{route.name | capitalize }}</a></li>
-          <li ng-if="isSignedIn()" class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-            Me <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li ><a  ng-click="logout()">Logout</a></li>
-          </ul>
-          </li>
+      <div class="header" ng-controller="MenuCtrl" ng-switch="isSignedIn()">
+        <ul class="nav nav-pills pull-right" ng-switch-when="true">
+          <li ng-repeat="route in privateRoutes" ng-class="{ active: isActive(route.path) }"><a ng-href="{{ route.path }}" >{{route.name | capitalize }}</a></li>
+          <li><a ng-click="logout()">Logout</a></li>
         </ul>
-        <h3 class="text-muted">Finance manager</h3>
+        <ul class="nav nav-pills pull-right" ng-switch-default>
+          <li ng-repeat="route in publicRoutes" ng-class="{active: isActive(route.path)}"><a href="{{route.path}}">{{route.name | capitalize }} </a></li>
+        </ul>
+        <h3><a ng-href="#/" class="text-muted">Finance manager</a></h3>
       </div>
 
       <div ng-view=""></div>

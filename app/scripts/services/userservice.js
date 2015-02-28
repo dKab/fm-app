@@ -11,7 +11,7 @@ angular.module('fmAppApp')
   .factory('UserService', function () {
 
     var currentUser;
-
+//TODO write spec for the service
     return {
       currentUser: function () {
         return currentUser;
@@ -24,6 +24,12 @@ angular.module('fmAppApp')
         // clear current_user data, unset logged in status, etc.
           currentUser = undefined;
         localStorage.removeItem('authToken');
+      },
+      getToken: function() {
+       return  localStorage.getItem('authToken');
+      },
+      setToken: function(token) {
+        localStorage.setItem('authToken', token);
       },
 
       isSignedIn: function() {

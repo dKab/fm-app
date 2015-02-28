@@ -7,9 +7,9 @@ class User extends ActiveRecord\Model {
     ];
 
     static $validates_presence_of = [
-          ['name', 'message'=>'User should have a name'],
-          ['email', 'message'=>'User should have an email'],
-          ['password', 'message'=>'User should have a password']
+          ['name', 'message'=>"can't be empty"],
+          ['email', 'message'=>"can't be empty"],
+          ['password', 'message'=>"can't be empty"]
       ];
     static $validates_size_of = [
         ['password', 'minimum' => 6, 'message'=>'is too short'],

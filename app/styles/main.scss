@@ -36,8 +36,11 @@ body {
 
 form[name=signup], form[name=login] {
   max-width: 300px;
-  margin: 20% auto 0;
+  margin: 150px auto 0;
   padding: 20px;
+  @media (min-height: 800px) {
+    margin: 250px auto 0;
+  }
 
   input {
     margin: 10px 0;
@@ -49,6 +52,22 @@ form[name=signup], form[name=login] {
     &.ng-valid.ng-touched {
       @include validation-highlight($state-success-text);
     }
+  }
+}
+a {
+  outline: none;
+}
+.header {
+  h3 {
+    a.text-muted:hover, a.text-muted:active, a.text-muted:focus {
+        text-decoration: none;
+        color: $text-muted;
+    }
+  }
+}
+.dropdown-menu {
+  a {
+    cursor: pointer;
   }
 }
 

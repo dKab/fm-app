@@ -10,6 +10,7 @@
 angular.module('fmAppApp')
   .controller('SignupCtrl', function ($scope, $http, $location, UserService) {
 
+    //TODO replace all direct operations with localstorage with UserService calls
     var userService = UserService;
 
     $scope.doSignup = function () {

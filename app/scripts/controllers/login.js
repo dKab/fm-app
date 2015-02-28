@@ -8,6 +8,7 @@
  * Controller of the fmAppApp
  */
 angular.module('fmAppApp')
+  //TODO replace all direct interactions with localstorage with calls to UserService
   .controller('LoginCtrl', function ($scope, $http, UserService, $location) {
   var userService = UserService;
   $scope.doLogin = function() {
