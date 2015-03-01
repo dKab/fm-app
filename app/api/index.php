@@ -51,12 +51,48 @@ ActiveRecord\Config::initialize(function($cfg)
     }
   });
 
+  $app->get('/operations', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+    });
+
+
+    $app->post('/operations/add', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+     });
+
+     $app->delete('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+     });
+
+     $app->put('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+     });
+
+
+     $app->post('/categories/add', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+     });
+
+     $app->delete('/categories/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+     });
+
+     $app->put('/categories/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+     });
 
  $app->get('/categories/', function() { AuthHelper::checkAuthorized(); } , function () use ($app) {
      $categories = Category::all(['joins'=>['user']], ['conditions'=>['user_id = ?', $app->userId]]);
      echo JSONUtils::ARresultsToJSON($categories);
  });
- //TODO operations model, operations route (or main route)
+
 
 
 

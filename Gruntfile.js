@@ -33,6 +33,10 @@ module.exports = function (grunt) {
         files: ['bower.json'],
         tasks: ['wiredep']
       },
+      coffee: {
+        files: '<%= yeoman.app %>/coffee/**/*.coffee',
+        tasks: ['coffee']
+      },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
         tasks: ['newer:jshint:all'],
@@ -395,7 +399,23 @@ module.exports = function (grunt) {
         configFile: "protractor.conf.js"
       },
       run: {}
+    },
+
+    coffee: {
+      glob_to_multiple: {
+        options: {
+          bare: true
+        },
+        expand: true,
+        flatten: false,
+        cwd: '<%= yeoman.app %>/coffee',
+        src: ['**/*.coffee'],
+        dest: '<%= yeoman.app %>/scripts/',
+        ext: '.js'
+      }
     }
+
+
   });
 
 
@@ -450,4 +470,6 @@ module.exports = function (grunt) {
     'test',
     'build',
   ]);
+
+  grunt.loadNpmTasks('grunt-contrib-coffee');
 };
