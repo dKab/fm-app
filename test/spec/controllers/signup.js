@@ -3,14 +3,14 @@
 describe('Controller: SignupCtrl', function () {
   beforeEach(module('fmAppApp'));
 
-  var ctrl,
-    scope, mockBackend;
+  var scope, mockBackend, signupCtrl;
 
   describe('method signUp', function() {
 
-    beforeEach(inject(function(_$httpBackend_, $rootScope) {
+    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
       mockBackend = _$httpBackend_;
       scope = $rootScope.$new();
+      signupCtrl = $controller('SignupCtrl', {$scope: scope});
     }));
 
     afterEach(function() {
@@ -19,53 +19,49 @@ describe('Controller: SignupCtrl', function () {
     });
 
     it('should send POST request with user data to the server',
-      inject (function($controller) {
+      function() {
         scope.name = 'John';
         scope.email = 'some@email';
         scope.password = 'somePass';
-        ctrl = $controller('SignupCtrl', { $scope: scope });
         mockBackend.expectPOST('/api/signup',
           {name:'John', email: 'some@email', password: 'somePass' }).respond(201, '');
         scope.doSignup();
         mockBackend.flush();
-      }));
+      });
 
-    it('should set token from response to browser\'s localstorage in case of success', inject(function($controller) {
-      localStorage.removeItem('authToken');
-      var token = 'asdfasfgegr';
-      expect(localStorage.getItem('authToken')).toBeNull();
-      ctrl = $controller('SignupCtrl', {$scope: scope});
-      mockBackend.whenPOST('/api/signup').respond(201, {token: token});
+    it('should ask UserService to save token in case of success', inject(function($injector) {
+      var UserService = function() {
+        return $injector.get('UserService');
+      };
+      var user = UserService();
+      spyOn(user, 'setToken');
+      mockBackend.whenPOST('/api/signup').respond(201, {token: 'asdfasfgegr'});
       scope.doSignup();
       mockBackend.flush();
-      expect(localStorage.getItem('authToken')).toBe(token);
+      expect(user.setToken).toHaveBeenCalledWith('asdfasfgegr');
     }));
 
-    it('should change location to `/` in case  of success', inject(function($location, $controller) {
+    it('should change location to `/` in case  of success', inject(function($location) {
         var location = $location;
-        ctrl = $controller('SignupCtrl', { $scope: scope });
         mockBackend.whenPOST('/api/signup').respond(201, '');
         spyOn(location, 'path');
         scope.doSignup();
         mockBackend.flush();
-        expect(location.path).toHaveBeenCalledWith('#');
+        expect(location.path).toHaveBeenCalledWith('/');
     }));
 
-    it('should assign status variable `failure` to the scope in case of error', inject(function($controller) {
-      ctrl = $controller('SignupCtrl', { $scope: scope });
+    it('should assign variable `errors` to the scope in case of error', function() {
       var errors = {
        errors: {
          name: 'too short'
        }
       };
       mockBackend.whenPOST('/api/signup').respond(422, errors);
-      expect(scope.failure).not.toBeDefined();
-      expect(scope.errors).not.toBeDefined();
+      expect(scope.errors).toBeUndefined();
       scope.doSignup();
       mockBackend.flush();
-      expect(scope.failure).toBe(true);
       expect(scope.errors).toEqual({name: 'too short'});
-    }));
+    });
 
   });
 });

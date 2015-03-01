@@ -17,22 +17,12 @@ describe('Controller: LoginCtrl', function () {
     });
   }));
 
-  beforeAll(function() {
-    if (localStorage.getItem('authToken') !== null) {
-        token = localStorage.getItem('authToken');
-    }
-  });
 
   afterEach(function() {
     mockBackend.verifyNoOutstandingExpectation();
     mockBackend.verifyNoOutstandingRequest();
   });
 
-  afterAll(function() {
-    if (token !== undefined) {
-      localStorage.setItem('authToken', token);
-    }
-  });
 
   it('should send POST request with login and password to the server', function () {
       mockBackend.expectPOST('/api/login', {email: 'someEmail', password: 'somePass'})
@@ -43,27 +33,17 @@ describe('Controller: LoginCtrl', function () {
       mockBackend.flush();
   });
 
-  it('should save token to localstorage in case of success', function() {
-    mockBackend.whenPOST('/api/login').respond(200,{token: 'xxx'});
-    localStorage.removeItem('authToken');
-    expect(localStorage.getItem('authToken')).toBeNull();
-    scope.doLogin();
-    mockBackend.flush();
-    expect(localStorage.getItem('authToken')).toBe('xxx');
-  });
-
-  it('should set current user on UserService in case of success',
+  it('should ask userService to save token in case of success',
     inject(function($injector) {
       var UserService = function() {
         return $injector.get('UserService');
       };
       userService = UserService();
-      spyOn(userService, 'setUser');
-      var response = {name: 'name', 'id': 'id' };
-      mockBackend.whenPOST('/api/login').respond(response);
+      spyOn(userService, 'setToken');
+      mockBackend.whenPOST('/api/login').respond(200,{token: 'xxx'});
       scope.doLogin();
       mockBackend.flush();
-      expect(userService.setUser).toHaveBeenCalledWith(response);
+      expect(userService.setToken).toHaveBeenCalledWith('xxx');
     }));
 
   it('should redirect to home path in case of success', inject(function($location) {
@@ -71,7 +51,7 @@ describe('Controller: LoginCtrl', function () {
       spyOn($location, 'path');
       scope.doLogin();
       mockBackend.flush();
-      expect($location.path).toHaveBeenCalledWith('#');
+      expect($location.path).toHaveBeenCalledWith('/');
   }));
 
   it('should set `error` property of the scope to true in case of error', function() {

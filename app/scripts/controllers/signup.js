@@ -10,8 +10,7 @@
 angular.module('fmAppApp')
   .controller('SignupCtrl', function ($scope, $http, $location, UserService) {
 
-    //TODO replace all direct operations with localstorage with UserService calls
-    var userService = UserService;
+    var user = UserService;
 
     $scope.doSignup = function () {
       $http.post('/api/signup', {
@@ -19,13 +18,9 @@ angular.module('fmAppApp')
         email: $scope.email,
         password: $scope.password
       }).success(function(data) {
-        localStorage.setItem('authToken', data.token);
-        var  user = { name: data.name,
-                      id: data.id };
-        userService.setUser(user);
-        $location.path('#');
+        user.setToken(data.token);
+        $location.path('/');
       }).error(function(data) {
-        $scope.failure = true;
         $scope.errors = data.errors;
       });
     };

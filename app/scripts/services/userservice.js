@@ -10,30 +10,22 @@
 angular.module('fmAppApp')
   .factory('UserService', function () {
 
-    var currentUser;
-//TODO write spec for the service
+    var key = 'fmAppAuthToken';
     return {
-      currentUser: function () {
-        return currentUser;
-      },
-      setUser: function(user) {
-        // check password on server, get user data, unique token, etc.
-        currentUser = user;
-      },
-      logOut: function() {
-        // clear current_user data, unset logged in status, etc.
-          currentUser = undefined;
-        localStorage.removeItem('authToken');
+
+      removeToken: function() {
+        localStorage.removeItem(key);
       },
       getToken: function() {
-       return  localStorage.getItem('authToken');
+       return  localStorage.getItem(key);
       },
       setToken: function(token) {
-        localStorage.setItem('authToken', token);
+        localStorage.setItem(key, token);
       },
 
       isSignedIn: function() {
-        return (localStorage.getItem('authToken') === null) ? false : true;
+        return (localStorage.getItem(key) === null) ? false : true;
       }
     };
+
   });

@@ -13,7 +13,7 @@ angular.module('fmAppApp')
       $scope.isSignedIn = user.isSignedIn;
 
       $scope.logout = function() {
-        user.logOut();
+        user.removeToken();
         $location.path('/login');
       };
     $scope.publicRoutes = [

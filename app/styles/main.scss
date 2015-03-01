@@ -41,7 +41,6 @@ form[name=signup], form[name=login] {
   @media (min-height: 800px) {
     margin: 250px auto 0;
   }
-
   input {
     margin: 10px 0;
     @extend .form-control;
@@ -56,6 +55,7 @@ form[name=signup], form[name=login] {
 }
 a {
   outline: none;
+  cursor: pointer;
 }
 .header {
   h3 {
