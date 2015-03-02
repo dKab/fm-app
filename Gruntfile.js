@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       coffee: {
-        files: '<%= yeoman.app %>/coffee/**/*.coffee',
+        files: ['<%= yeoman.app %>/scripts/**/*.coffee', 'test/**/*.coffee'],
         tasks: ['coffee']
       },
       js: {
@@ -408,9 +408,20 @@ module.exports = function (grunt) {
         },
         expand: true,
         flatten: false,
-        cwd: '<%= yeoman.app %>/coffee',
+        cwd: '<%= yeoman.app %>/scripts',
         src: ['**/*.coffee'],
         dest: '<%= yeoman.app %>/scripts/',
+        ext: '.js'
+      },
+      glob_to_multiple_test: {
+        options: {
+          bare: true
+        },
+        expand: true,
+        flatten: false,
+        cwd: 'test',
+        src: ['**/*.coffee'],
+        dest: 'test/',
         ext: '.js'
       }
     }

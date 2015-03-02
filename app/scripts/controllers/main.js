@@ -9,10 +9,8 @@
  */
 angular.module('fmAppApp')
   .controller('MainCtrl', function ($scope, $http) {
-    $scope.categories = [];
-    $http.get('/api/categories').success(function(data) {
-
-      $scope.categories = data;
+    $http.get('/api/operations').success(function(data) {
+      $scope.operations = data;
     }).error(function(data) {
 
     });
