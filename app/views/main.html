@@ -1,6 +1,42 @@
-<p>Categories:</p>
-<ul>
-  <li ng-repeat="category in categories">
-   {{  category.name }}
-  </li>
-</ul>
+<div role="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active" >
+      <a data-target="#operations" aria-controls="operations" role="tab" data-toggle="tab">Операции</a>
+    </li>
+    <li role="presentation">
+      <a data-target="#categories" aria-controls="categories" role="tab" data-toggle="tab">Категории</a>
+    </li>
+  </ul>
+</div>
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="operations" ng-controller="OperationsCtrl">
+    <p>Последние операции:</p>
+    <form  novalidate class="form-inline">
+      <input type="number" ng-model="amount" placeholder="-100" />
+      <select ng-model="category">
+        <option value="">выбрать категорию...</option>
+        <option value="{{ category.name }}" ng-repeat="category in categories">{{ category.name }}</option>
+      </select>
+      <input type="text"  ng-show="!category" placeholder="Новая категория" ng-model="newCategory"/>
+      <button ng-click="addOperation()" class="btn btn-primary" ng-disabled="!newCategory && !category || !amount">Добавить</button>
+    </form>
+    <!--TODO create directive combobox to combine functionality of select and text input -->
+    <ul>
+      <li ng-repeat="operaion in operations">
+        {{  operation.amount }} ( {{ operation.category.name }} ) - {{ operation.date }}
+        <!--TODO create filter for date to display it in informal format (2 days ago, 1 hour ago, etc.) -->
+      </li>
+    </ul>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="categories" ng-controller="CategoriesCtrl">
+    <p>Мои категории:</p>
+    <form class="form-inline">
+      <input type="text" ng-model="name" placeholder="Добавить категорию" />
+      <button class="btn btn-primary" ng-click="addCategory()" ng-disabled="!name">Добавить</button>
+    </form>
+    <ul>
+      <li ng-repeat="category in categories" >{{category.name }}</li>
+    </ul>
+  </div>
+</div>
+

@@ -10,29 +10,8 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
     @include box-shadow($shadow);
   }
 }
-/**
-*Sticky footer styles
-*/
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  left:0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-}
 
-/**
-*Application custom styles
-*/
+@import "sticky-footer";
 
 form[name=signup], form[name=login] {
   max-width: 300px;
@@ -42,9 +21,6 @@ form[name=signup], form[name=login] {
     margin: 250px auto 0;
   }
   input {
-    margin: 10px 0;
-    @extend .form-control;
-
     &.ng-invalid.ng-touched {
       @include validation-highlight($state-danger-text);
     }
@@ -74,6 +50,14 @@ a {
 .footer {
   padding: 25px 0;
   text-align: center;
+}
+
+input, select {
+  @extend .form-control;
+  margin: 10px 0 !important;
+}
+.tab-pane {
+  padding-top: 20px;
 }
 
 

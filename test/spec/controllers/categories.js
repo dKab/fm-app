@@ -1,22 +1,30 @@
 'use strict';
-
-describe('Controller: CategoriesCtrl', function () {
-
-  // load the controller's module
+describe('Controller: categoriesCtrl', function() {
+  var $httpBackend, ctrl, scope;
   beforeEach(module('fmAppApp'));
-
-  var CategoriesCtrl,
-    scope;
-
-  // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    CategoriesCtrl = $controller('CategoriesCtrl', {
+  scope = $httpBackend = ctrl = null;
+  beforeEach(inject(function(_$rootScope_, _$httpBackend_, _$controller_) {
+    scope = _$rootScope_.$new();
+    $httpBackend = _$httpBackend_;
+    return ctrl = _$controller_('CategoriesCtrl', {
       $scope: scope
     });
   }));
-
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.categories).toEqual(['foo']);
+  it('should attach a list of categories to the $scope', function() {
+    return expect(scope.categories).toEqual(jasmine.any(Array));
+  });
+  return describe('method addCategory', function() {
+    afterEach(function() {
+      $httpBackend.verifyNoOutstandingExpectation();
+      return $httpBackend.verifyNoOutstandingRequest();
+    });
+    return it('should POST new category data to /api/category with category model value', function() {
+      $httpBackend.expectPOST('/api/category', {
+        name: 'food'
+      }).respond(200, '');
+      scope.name = 'food';
+      scope.addCategory();
+      return $httpBackend.flush();
+    });
   });
 });

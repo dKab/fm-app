@@ -44,13 +44,6 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
-      .when('/categories', {
-        templateUrl: 'views/categories.html',
-        controller: 'CategoriesCtrl',
-        resolve: {
-          authNeeded: checkAuth
-        }
-      })
       .when('/signup', {
         templateUrl: 'views/signup.html',
         controller: 'SignupCtrl'

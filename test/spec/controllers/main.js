@@ -11,17 +11,17 @@ describe('MainCtrl controller', function() {
     httpBackend.verifyNoOutstandingExpectation();
     return httpBackend.verifyNoOutstandingRequest();
   });
-  it('should send http GET request to /api/operations', inject(function($controller) {
+  xit('should send http GET request to /api/operation', inject(function($controller) {
     var ctrl;
-    httpBackend.expectGET('/api/operations').respond(200, '');
+    httpBackend.expectGET('/api/operation').respond(200, '');
     ctrl = $controller('MainCtrl', {
       $scope: scope
     });
     return httpBackend.flush();
   }));
-  it('should attach returned array of operations to the scope', inject(function($controller) {
+  xit('should attach returned array of operations to the scope', inject(function($controller) {
     var ctrl;
-    httpBackend.whenGET('/api/operations').respond(200, ['foo', 'bar', 'baz']);
+    httpBackend.whenGET('/api/operation').respond(200, ['foo', 'bar', 'baz']);
     ctrl = $controller('MainCtrl', {
       $scope: scope
     });

@@ -24,7 +24,7 @@ ActiveRecord\Config::initialize(function($cfg)
      if ($user->is_valid()) {
         $user->password = password_hash($user->password, PASSWORD_DEFAULT);
         $user->save();
-        //add new User to database and provide token with his credentials
+        //add new User to database and provide him with token
         $responseBody['token'] = AuthHelper::generateToken($user->id);
         $responseBody['name'] = $user->name;
         $responseBody['id'] = $user->id;
@@ -38,7 +38,6 @@ ActiveRecord\Config::initialize(function($cfg)
   $app->post('/login', function () use ($app) {
     $responseBody = [];
     $req = json_decode($app->request->getBody());
-    //file_put_contents($_SERVER['DOCUMENT_ROOT'] . "/1.txt", print_r($req, true));
     $user = User::find_by_email($req->email);
     if ($user !== null && password_verify($req->password, $user->password) ) {
           $responseBody['token'] = AuthHelper::generateToken($user->id);
@@ -51,39 +50,39 @@ ActiveRecord\Config::initialize(function($cfg)
     }
   });
 
-  $app->get('/operations', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+    $app->get('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
     });
 
 
-    $app->post('/operations/add', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+    $app->post('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
-     $app->delete('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->delete('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
-     $app->put('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->put('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
 
-     $app->post('/categories/add', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->post('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
-     $app->delete('/categories/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->delete('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
-     $app->put('/categories/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->put('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });

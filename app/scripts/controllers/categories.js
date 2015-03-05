@@ -1,17 +1,11 @@
 'use strict';
-
-/**
- * @ngdoc function
- * @name fmAppApp.controller:CategoriesCtrl
- * @description
- * # CategoriesCtrl
- * Controller of the fmAppApp
- */
-angular.module('fmAppApp')
-  .controller('CategoriesCtrl', function ($scope, $http) {
-    //$scope.categories = [];
-    //$http.get('/api/categories').success(function(data) {
-    //  $scope.categories = data;
-    //});
-    $scope.categories = ['foo'];
+angular.module('fmAppApp').controller('CategoriesCtrl', function(Category, $scope) {
+  $scope.categories = [];
+  return $scope.addCategory = function() {
+    var category;
+    category = new Category({
+      name: $scope.name
+    });
+    return category.$save();
+  };
 });
