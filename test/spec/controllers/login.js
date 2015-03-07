@@ -54,12 +54,12 @@ describe('Controller: LoginCtrl', function () {
       expect($location.path).toHaveBeenCalledWith('/');
   }));
 
-  it('should set `error` property of the scope to true in case of error', function() {
+  it('should attach a list of errors to the scope in case of error', function() {
     mockBackend.whenPOST('/api/login').respond(401, { errors: { someErr: 'oh noez! error occurred!'}});
-    expect(scope.error).toBeUndefined();
+    expect(scope.errors).toBeUndefined();
     scope.doLogin();
     mockBackend.flush();
-    expect(scope.error).toBe('oh noez! error occurred!');
+    expect(scope.errors).toEqual({someErr: 'oh noez! error occurred!'});
   });
 
 });

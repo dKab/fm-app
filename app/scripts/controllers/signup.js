@@ -17,11 +17,12 @@ angular.module('fmAppApp')
         name: $scope.name,
         email: $scope.email,
         password: $scope.password
-      }).success(function(data) {
-        user.setToken(data.token);
+      }).success(function(response) {
+        if (response && response.data && response.data.token)
+        user.setToken(response.data.token);
         $location.path('/');
-      }).error(function(data) {
-        $scope.errors = data.errors;
+      }).error(function(response) {
+        $scope.errors = response.errors;
       });
     };
   });
