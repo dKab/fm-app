@@ -11,9 +11,9 @@
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="operations" ng-controller="OperationsCtrl">
     <p>Последние операции:</p>
-    <form  novalidate class="form-inline">
+    <form  novalidate class="form-inline" ng-controller="CategoriesCtrl">
       <input type="number" ng-model="amount" placeholder="-100" />
-      <select ng-model="category">
+      <select ng-model="category" >
         <option value="">выбрать категорию...</option>
         <option value="{{ category.name }}" ng-repeat="category in categories">{{ category.name }}</option>
       </select>

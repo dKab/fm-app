@@ -40,7 +40,7 @@ describe('Controller: LoginCtrl', function () {
       };
       userService = UserService();
       spyOn(userService, 'setToken');
-      mockBackend.whenPOST('/api/login').respond(200,{token: 'xxx'});
+      mockBackend.whenPOST('/api/login').respond(200,{ data: { token: 'xxx'} });
       scope.doLogin();
       mockBackend.flush();
       expect(userService.setToken).toHaveBeenCalledWith('xxx');
@@ -55,7 +55,7 @@ describe('Controller: LoginCtrl', function () {
   }));
 
   it('should set `error` property of the scope to true in case of error', function() {
-    mockBackend.whenPOST('/api/login').respond(401, { error: 'oh noez! error occurred!'});
+    mockBackend.whenPOST('/api/login').respond(401, { errors: { someErr: 'oh noez! error occurred!'}});
     expect(scope.error).toBeUndefined();
     scope.doLogin();
     mockBackend.flush();

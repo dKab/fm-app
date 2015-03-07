@@ -12,3 +12,4 @@ describe 'Controller: OperationsCtrl', ->
     expect scope.operations
       .toEqual jasmine.any Array
 
+

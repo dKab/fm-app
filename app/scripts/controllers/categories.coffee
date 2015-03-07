@@ -5,8 +5,6 @@ angular.module 'fmAppApp'
     $scope.categories = []
 
     $scope.addCategory = ->
-      category = new Category(name: $scope.name)
+      category = new Category { name: $scope.name}
       category.$save()
-
-
 

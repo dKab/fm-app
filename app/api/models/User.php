@@ -3,7 +3,8 @@ use ActiveRecord\Model;
 class User extends ActiveRecord\Model {
 
    static $has_many = [
-        ['categories', 'class_name'=>'Category']
+        ['categories', 'class_name'=>'Category'],
+        ['operations']
     ];
 
     static $validates_presence_of = [

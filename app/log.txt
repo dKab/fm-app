@@ -2,3 +2,4 @@
 [28-Feb-2015 16:22:05 Asia/Yekaterinburg] PHP Fatal error:  Call to undefined method stdClass::exp() in /home/dmitriy/study/js/fm-app/app/api/AuthHelper.php on line 15
 [28-Feb-2015 16:22:51 Asia/Yekaterinburg] PHP Fatal error:  Call to undefined method stdClass::exp() in /home/dmitriy/study/js/fm-app/app/api/AuthHelper.php on line 15
 [28-Feb-2015 18:05:45 Asia/Yekaterinburg] PHP Fatal error:  Call to undefined method AuthHelper::getUserId() in /home/dmitriy/study/js/fm-app/app/api/index.php on line 56
+[07-Mar-2015 20:23:20 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/dmitriy/study/js/fm-app/app/api/JSONUtils.php on line 33

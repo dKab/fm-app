@@ -5,4 +5,14 @@ class Category extends ActiveRecord\Model {
     ['user', 'select'=>['id']]
   ];
 
+  static $has_many = [
+     ['operations']
+  ];
+
+  static $validates_presence_of = [
+    ['name','message'=>"can't be empty"]
+  ];
+
+
+
  }

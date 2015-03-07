@@ -18,43 +18,44 @@ ActiveRecord\Config::initialize(function($cfg)
  });
 
   $app->post('/signup', function () use ($app) {
-     $responseBody = [];
      $req = json_decode($app->request->getBody(), $assoc = true);
      $user = User::create($req);
      if ($user->is_valid()) {
         $user->password = password_hash($user->password, PASSWORD_DEFAULT);
         $user->save();
-        //add new User to database and provide him with token
-        $responseBody['token'] = AuthHelper::generateToken($user->id);
-        $responseBody['name'] = $user->name;
-        $responseBody['id'] = $user->id;
-        JSONUtils::sendJSON(201, $responseBody);
+        $response = [
+          'token' => AuthHelper::generateToken($user->id)
+        ];
+        $headers = ['Location'=>"/user/{$user->id}"];
+        JSONUtils::sendJSON(201, $response, $headers);
      } else {
-         $responseBody['errors'] = $user->errors->to_array();
-         JSONUtils::sendJSON(422, $responseBody);
+         $errors = $user->errors->to_array();
+         JSONUtils::sendError(422, $errors);
      }
   });
 
   $app->post('/login', function () use ($app) {
-    $responseBody = [];
     $req = json_decode($app->request->getBody());
     $user = User::find_by_email($req->email);
     if ($user !== null && password_verify($req->password, $user->password) ) {
-          $responseBody['token'] = AuthHelper::generateToken($user->id);
-          $responseBody['name'] = $user->name;
-          $responseBody['id'] = $user->id;
-          JSONUtils::sendJSON(200, $responseBody);
+          $response =[
+            'token' => AuthHelper::generateToken($user->id)
+          ];
+          JSONUtils::sendJSON(200, $response);
     } else {
-        $responseBody['error'] = 'Invalid Email or password';
-        JSONUtils::sendJSON(401, $responseBody);
+        $errors =['Bad credentials' => 'Invalid Email or password'];
+        JSONUtils::sendError(401, $errors);
     }
   });
 
-    $app->get('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
-
+    $app->get('/operation/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
 
     });
 
+    $app->get('/operation/', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+
+
+    });
 
     $app->post('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
@@ -73,8 +74,17 @@ ActiveRecord\Config::initialize(function($cfg)
 
 
      $app->post('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
-
-
+        $req = json_decode($app->request->getBody(), $assoc = true);
+        $req['user_id'] = $app->userId;
+        $cat = Category::create($req);
+        file_put_contents('$_SERVER["DOCUMENT_ROOT"]/1.txt', print_r($_SERVER, true)); //TODO remove this line
+        if ($cat->is_valid()) {
+          $headers = ['Location'=>"/category/{$cat->id}"];
+          JSONUtils::sendJSON(201, $cat->to_array(), $headers);
+        } else {
+           $errors = $user->errors->to_array();
+           JSONUtils::sendError(422, $errors);
+        }
      });
 
      $app->delete('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
@@ -87,13 +97,19 @@ ActiveRecord\Config::initialize(function($cfg)
 
      });
 
- $app->get('/categories/', function() { AuthHelper::checkAuthorized(); } , function () use ($app) {
-     $categories = Category::all(['joins'=>['user']], ['conditions'=>['user_id = ?', $app->userId]]);
-     echo JSONUtils::ARresultsToJSON($categories);
- });
+      $app->get('/category/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
+       $category = Category::find($id);
 
 
+       //JSONUtils::sendJSON(
 
+      });
+
+    $app->get('/category/', function() { AuthHelper::checkAuthorized(); } , function () use ($app) {
+      $categories = Category::all(['joins'=>['user']], ['conditions'=>['user_id = ?', $app->userId]]);
+      $data = JSONUtils::ARCollectionToArray($categories);
+      $JSONUtils::sendJSON(200, $data);
+    });
 
 
  $app->run();
