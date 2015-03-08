@@ -35,7 +35,7 @@ describe('Controller: SignupCtrl', function () {
       };
       var user = UserService();
       spyOn(user, 'setToken');
-      mockBackend.whenPOST('/api/signup').respond(201, {data: {token: 'asdfasfgegr'}});
+      mockBackend.whenPOST('/api/signup').respond(201, {token: 'asdfasfgegr'});
       scope.doSignup();
       mockBackend.flush();
       expect(user.setToken).toHaveBeenCalledWith('asdfasfgegr');

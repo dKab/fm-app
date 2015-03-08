@@ -17,12 +17,10 @@ describe('Controller: LoginCtrl', function () {
     });
   }));
 
-
   afterEach(function() {
     mockBackend.verifyNoOutstandingExpectation();
     mockBackend.verifyNoOutstandingRequest();
   });
-
 
   it('should send POST request with login and password to the server', function () {
       mockBackend.expectPOST('/api/login', {email: 'someEmail', password: 'somePass'})
@@ -40,7 +38,7 @@ describe('Controller: LoginCtrl', function () {
       };
       userService = UserService();
       spyOn(userService, 'setToken');
-      mockBackend.whenPOST('/api/login').respond(200,{ data: { token: 'xxx'} });
+      mockBackend.whenPOST('/api/login').respond(200,{ token: 'xxx'} );
       scope.doLogin();
       mockBackend.flush();
       expect(userService.setToken).toHaveBeenCalledWith('xxx');

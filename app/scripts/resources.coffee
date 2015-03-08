@@ -1,5 +1,5 @@
 angular.module 'fmAppApp'
   .factory 'Operation', ($resource) ->
-    $resource '/api/operation', null, { update: {method: 'PUT'}}
+    $resource '/api/operations', null, { update: {method: 'PUT'}}
   .factory 'Category', ($resource) ->
-    $resource '/api/category', null, { update: {method: 'PUT'}}
+    $resource '/api/categories', null, { update: {method: 'PUT'}}

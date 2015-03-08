@@ -30,7 +30,7 @@ ActiveRecord\Config::initialize(function($cfg)
         JSONUtils::sendJSON(201, $response, $headers);
      } else {
          $errors = $user->errors->to_array();
-         JSONUtils::sendError(422, $errors);
+         JSONUtils::sendError(400, $errors);
      }
   });
 
@@ -48,38 +48,38 @@ ActiveRecord\Config::initialize(function($cfg)
     }
   });
 
-    $app->get('/operation/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
+    $app->get('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
 
     });
 
-    $app->get('/operation/', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+    $app->get('/operations/', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
     });
 
-    $app->post('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+    $app->post('/operations/', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+  //TODO first thing in the morning implement this controller
+
+     });
+
+     $app->delete('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
-     $app->delete('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
-
-
-     });
-
-     $app->put('/operation', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->put('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
 
-     $app->post('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->post('/categories', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
         $req = json_decode($app->request->getBody(), $assoc = true);
         $req['user_id'] = $app->userId;
         $cat = Category::create($req);
-        file_put_contents('$_SERVER["DOCUMENT_ROOT"]/1.txt', print_r($_SERVER, true)); //TODO remove this line
+        file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/1.txt', print_r($_SERVER, true)); //TODO remove this line
         if ($cat->is_valid()) {
-          $headers = ['Location'=>"/category/{$cat->id}"];
+          $headers = ['Location'=>"http://{$_SERVER['HTTP_HOST']}/api/categories/{$cat->id}"];
           JSONUtils::sendJSON(201, $cat->to_array(), $headers);
         } else {
            $errors = $user->errors->to_array();
@@ -87,28 +87,32 @@ ActiveRecord\Config::initialize(function($cfg)
         }
      });
 
-     $app->delete('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->delete('/categories', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
-     $app->put('/category', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->put('/categories/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
 
 
      });
 
-      $app->get('/category/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
-       $category = Category::find($id);
+      $app->get('/categories/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
+        try {
+          $category = Category::find($id);
 
-
-       //JSONUtils::sendJSON(
-
+        } catch(RecordNotFound $e) {
+            $app->response->status(404);
+        } catch(Exception $e) {
+            $app->response->status(400);
+            $app->response()->header('X-Status-Reason', $e->getMessage());
+        }
       });
 
-    $app->get('/category/', function() { AuthHelper::checkAuthorized(); } , function () use ($app) {
+    $app->get('/categories/', function() { AuthHelper::checkAuthorized(); } , function () use ($app) {
       $categories = Category::all(['joins'=>['user']], ['conditions'=>['user_id = ?', $app->userId]]);
       $data = JSONUtils::ARCollectionToArray($categories);
-      $JSONUtils::sendJSON(200, $data);
+      JSONUtils::sendJSON(200, $data);//TODO add pagination
     });
 
 

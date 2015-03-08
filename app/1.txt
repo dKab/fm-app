@@ -1,0 +1,31 @@
+Array
+(
+    [DOCUMENT_ROOT] => /home/dmitriy/study/js/fm-app/app
+    [REMOTE_ADDR] => 127.0.0.1
+    [REMOTE_PORT] => 52548
+    [SERVER_SOFTWARE] => PHP 5.5.9-1ubuntu4.6 Development Server
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_NAME] => localhost
+    [SERVER_PORT] => 9000
+    [REQUEST_URI] => /api/categories
+    [REQUEST_METHOD] => POST
+    [SCRIPT_NAME] => /api/index.php
+    [SCRIPT_FILENAME] => /home/dmitriy/study/js/fm-app/app/api/index.php
+    [PATH_INFO] => /categories
+    [PHP_SELF] => /api/index.php/categories
+    [HTTP_HOST] => localhost:9000
+    [HTTP_USER_AGENT] => Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:36.0) Gecko/20100101 Firefox/36.0
+    [HTTP_ACCEPT] => application/json, text/plain, */*
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.5
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate
+    [HTTP_CONTENT_TYPE] => application/json;charset=utf-8
+    [HTTP_AUTHORIZATION] => eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmbS1hcHAiLCJpYXQiOjE0MjU4MzA0ODUsImV4cCI6MTQyODI0OTY4NSwic3ViIjoiNSJ9.TZ2JMoU6uqer-N7r37kYbbQYWayKYr3XaSSIEAA41-c
+    [HTTP_REFERER] => http://localhost:9000/
+    [HTTP_CONTENT_LENGTH] => 20
+    [HTTP_COOKIE] => BITRIX_SM_menumode=; BITRIX_SM_LOGIN=; _ga=GA1.1.86105875.1423393479
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_PRAGMA] => no-cache
+    [HTTP_CACHE_CONTROL] => no-cache
+    [REQUEST_TIME_FLOAT] => 1425830497.6319
+    [REQUEST_TIME] => 1425830497
+)

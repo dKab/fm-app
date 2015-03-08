@@ -1,11 +1,11 @@
 angular.module('fmAppApp').factory('Operation', function($resource) {
-  return $resource('/api/operation', null, {
+  return $resource('/api/operations', null, {
     update: {
       method: 'PUT'
     }
   });
 }).factory('Category', function($resource) {
-  return $resource('/api/category', null, {
+  return $resource('/api/categories', null, {
     update: {
       method: 'PUT'
     }

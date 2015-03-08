@@ -13,8 +13,8 @@ angular.module('fmAppApp')
   $scope.doLogin = function() {
       $http.post('/api/login', {email: $scope.email, password: $scope.password } )
         .success(function(response) {
-          if (response && response.data && response.data.token)
-          user.setToken(response.data.token);
+          if (response && response.token)
+          user.setToken(response.token);
           $location.path('/');
         })
         .error(function(response) {

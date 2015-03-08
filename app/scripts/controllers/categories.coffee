@@ -1,10 +1,11 @@
 'use strict'
 
 angular.module 'fmAppApp'
-  .controller 'CategoriesCtrl', (Category, $scope) ->
-    $scope.categories = []
-
+  .controller 'CategoriesCtrl', (CategoryService, $scope) ->
+    $scope.categories = CategoryService.getCategories()
     $scope.addCategory = ->
-      category = new Category { name: $scope.name}
+      category = CategoryService.createCategory $scope.name
       category.$save()
+      $scope.categories.push category
+      $scope.name = ''
 

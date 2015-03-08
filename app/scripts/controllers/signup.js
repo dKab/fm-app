@@ -18,8 +18,8 @@ angular.module('fmAppApp')
         email: $scope.email,
         password: $scope.password
       }).success(function(response) {
-        if (response && response.data && response.data.token)
-        user.setToken(response.data.token);
+        if (response && response.token)
+        user.setToken(response.token);
         $location.path('/');
       }).error(function(response) {
         $scope.errors = response.errors;

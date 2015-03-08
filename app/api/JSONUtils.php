@@ -29,8 +29,7 @@ class JSONUtils extends Utils {
        foreach ($headers as $key => $value )
           $app->response->headers->set($key, $value);
        $app->response->headers->set('Content-Type', 'application/json');
-       $responseBody = ['data' => $data];
-       echo json_encode($responseBody);
+       echo json_encode($data);
    }
 
 }

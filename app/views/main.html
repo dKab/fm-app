@@ -11,13 +11,15 @@
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane active" id="operations" ng-controller="OperationsCtrl">
     <p>Последние операции:</p>
-    <form  novalidate class="form-inline" ng-controller="CategoriesCtrl">
+    <form  novalidate class="form-inline">
       <input type="number" ng-model="amount" placeholder="-100" />
-      <select ng-model="category" >
-        <option value="">выбрать категорию...</option>
-        <option value="{{ category.name }}" ng-repeat="category in categories">{{ category.name }}</option>
-      </select>
-      <input type="text"  ng-show="!category" placeholder="Новая категория" ng-model="newCategory"/>
+      <div class="form-group">
+        <select ng-model="category" >
+          <option value="">выбрать категорию...</option>
+          <option value="{{ category.id }}" ng-repeat="category in categories">{{ category.name }}</option>
+        </select>
+        <input type="text"  ng-show="!category" placeholder="Новая категория" ng-model="newCategory"/>
+      </div>
       <button ng-click="addOperation()" class="btn btn-primary" ng-disabled="!newCategory && !category || !amount">Добавить</button>
     </form>
     <!--TODO create directive combobox to combine functionality of select and text input -->

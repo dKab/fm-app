@@ -17,7 +17,8 @@ angular.module('fmAppApp')
         localStorage.removeItem(key);
       },
       getToken: function() {
-       return  localStorage.getItem(key);
+        return  localStorage.getItem(key);
+
       },
       setToken: function(token) {
         localStorage.setItem(key, token);
