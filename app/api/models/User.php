@@ -16,12 +16,6 @@ class User extends ActiveRecord\Model {
         ['password', 'minimum' => 6, 'message'=>'is too short'],
         ['name', 'minimum'=>3, 'message'=>'is too short']
     ];
-//    static $validates_format_of = [
-//      ['email', 'with' =>
-//         "/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/"]
-//      //TODO add password strength validation here
-//    ];
-
     static $validates_uniqueness_of = [
         ['email', 'message' => 'is occupied!']
     ];

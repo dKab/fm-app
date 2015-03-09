@@ -18,17 +18,13 @@ angular.module('fmAppApp')
       };
     $scope.publicRoutes = [
       {
-        name: 'about',
+        name: 'Справка',
         path: '#/about'
-      },
-      {
-        name: 'login',
-        path: '#/login'
       }
     ];
     $scope.privateRoutes = [
       {
-        name: 'home',
+        name: 'главная',
         path: '#/'
       }
     ];

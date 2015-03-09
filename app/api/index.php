@@ -53,13 +53,22 @@ ActiveRecord\Config::initialize(function($cfg)
     });
 
     $app->get('/operations/', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
-
-
+      $operations = Operation::all(['joins'=>['user']], ['conditions'=>['user_id = ?', $app->userId], 'order' => 'date desc']);
+      $data = JSONUtils::ARCollectionToArray($operations, Operation::$how_to_serialize);
+      JSONUtils::sendJSON(200, $data);
     });
 
     $app->post('/operations/', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
-  //TODO first thing in the morning implement this controller
-
+        $req = json_decode($app->request->getBody(), $assoc = true);
+        $req['user_id'] = $app->userId;
+        $op = Operation::create($req);
+        if ($op->is_valid()) {
+          $headers =  ['Location'=>"http:://{$_SERVER['HTTP_HOST']}/api/operations/{$op->id}"];
+          JSONUtils::sendJSON(201, $op->to_array(Operation::$how_to_serialize), $headers);
+         } else {
+          $errors = $op->errors->to_array();
+          JSONUtils::sendError(422, $errors);
+         }
      });
 
      $app->delete('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
@@ -77,12 +86,11 @@ ActiveRecord\Config::initialize(function($cfg)
         $req = json_decode($app->request->getBody(), $assoc = true);
         $req['user_id'] = $app->userId;
         $cat = Category::create($req);
-        file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/1.txt', print_r($_SERVER, true)); //TODO remove this line
         if ($cat->is_valid()) {
           $headers = ['Location'=>"http://{$_SERVER['HTTP_HOST']}/api/categories/{$cat->id}"];
-          JSONUtils::sendJSON(201, $cat->to_array(), $headers);
+          JSONUtils::sendJSON(201, $cat->to_array(Category::$how_to_serialize), $headers);
         } else {
-           $errors = $user->errors->to_array();
+           $errors = $cat->errors->to_array();
            JSONUtils::sendError(422, $errors);
         }
      });

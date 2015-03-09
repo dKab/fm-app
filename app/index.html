@@ -22,11 +22,12 @@
     <div class="container">
       <div class="header" ng-controller="MenuCtrl" ng-switch="isSignedIn()">
         <ul class="nav nav-pills pull-right" ng-switch-when="true">
-          <li ng-repeat="route in privateRoutes" ng-class="{ active: isActive(route.path) }"><a ng-href="{{ route.path }}" >{{route.name | capitalize }}</a></li>
-          <li><a ng-click="logout()">Logout</a></li>
+          <li ng-repeat="route in privateRoutes.concat(publicRoutes)" ng-class="{ active: isActive(route.path) }"><a ng-href="{{ route.path }}" >{{route.name | capitalize }}</a></li>
+          <li><a ng-click="logout()">Выход</a></li>
         </ul>
         <ul class="nav nav-pills pull-right" ng-switch-default>
           <li ng-repeat="route in publicRoutes" ng-class="{active: isActive(route.path)}"><a href="{{route.path}}">{{route.name | capitalize }} </a></li>
+          <li ng-class="{active: isActive('#/login')}"><a href="#/login">Вход</a></li>
         </ul>
         <h3><a ng-href="#/" class="text-muted">Finance manager</a></h3>
       </div>

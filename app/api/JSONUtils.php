@@ -5,11 +5,11 @@ use \ActiveRecord\Utils as Utils;
 
 class JSONUtils extends Utils {
 
-  public static function ARCollectionToArray($resultArray) {
+  public static function ARCollectionToArray($resultArray, $options = []) {
     $arr =[];
       if(count($resultArray)>0){
         foreach($resultArray as $row)
-          $arr[] = $row->to_array();
+          $arr[] = $row->to_array($options);
        }
     return $arr;
   }

@@ -20,8 +20,8 @@ describe('Controller: OperationsCtrl', function() {
     $httpBackend = null;
     beforeEach(inject(function(_$httpBackend_) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('/api/operations').respond(200, '');
-      return $httpBackend.expectGET('/api/categories').respond(200, '');
+      $httpBackend.expectGET('/api/categories').respond(200, '');
+      return $httpBackend.expectGET('/api/operations').respond(200, '');
     }));
     it('should send POST request to /api/operations with amount and category', function() {
       $httpBackend.expectPOST('/api/operations', {

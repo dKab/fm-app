@@ -3,3 +3,13 @@
 [28-Feb-2015 16:22:51 Asia/Yekaterinburg] PHP Fatal error:  Call to undefined method stdClass::exp() in /home/dmitriy/study/js/fm-app/app/api/AuthHelper.php on line 15
 [28-Feb-2015 18:05:45 Asia/Yekaterinburg] PHP Fatal error:  Call to undefined method AuthHelper::getUserId() in /home/dmitriy/study/js/fm-app/app/api/index.php on line 56
 [07-Mar-2015 20:23:20 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/dmitriy/study/js/fm-app/app/api/JSONUtils.php on line 33
+[09-Mar-2015 13:09:39 Asia/Yekaterinburg] PHP Fatal error:  Undefined class constant 'how_to_serialize' in /home/dmitriy/study/js/fm-app/app/api/index.php on line 57
+[09-Mar-2015 13:10:13 Asia/Yekaterinburg] PHP Fatal error:  Undefined class constant 'how_to_serialize' in /home/dmitriy/study/js/fm-app/app/api/index.php on line 57
+[09-Mar-2015 13:11:02 Asia/Yekaterinburg] PHP Fatal error:  Undefined class constant 'how_to_serialize' in /home/dmitriy/study/js/fm-app/app/api/index.php on line 57
+[09-Mar-2015 14:41:52 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected '[', expecting ']' in /home/dmitriy/study/js/fm-app/app/api/models/Operation.php on line 26
+[09-Mar-2015 14:42:59 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected '[', expecting ']' in /home/dmitriy/study/js/fm-app/app/api/models/Operation.php on line 26
+[09-Mar-2015 14:43:41 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected 'static' (T_STATIC), expecting ',' or ';' in /home/dmitriy/study/js/fm-app/app/api/models/Operation.php on line 29
+[09-Mar-2015 14:44:08 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/dmitriy/study/js/fm-app/app/api/models/Operation.php on line 34
+[09-Mar-2015 14:46:06 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/dmitriy/study/js/fm-app/app/api/models/Operation.php on line 34
+[09-Mar-2015 14:48:47 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/dmitriy/study/js/fm-app/app/api/models/Operation.php on line 34
+[09-Mar-2015 14:57:37 Asia/Yekaterinburg] PHP Parse error:  syntax error, unexpected ';', expecting ']' in /home/dmitriy/study/js/fm-app/app/api/models/Operation.php on line 33

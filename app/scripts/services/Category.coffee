@@ -2,8 +2,13 @@
 
 angular.module 'fmAppApp'
   .factory 'CategoryService', (Category) ->
+    categories = Category.query()
     catServiceInstance =
         getCategories: ->
-          Category.query()
+          categories
         createCategory: (name) ->
-          category = new Category { name: name}
+          category = new Category { name: name }
+        addCategory: (category)->
+          categories.push category
+        deleteCategory: (id) ->
+#          TODO implement this method

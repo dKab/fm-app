@@ -44,7 +44,6 @@ describe 'Controller: categoriesCtrl',  ->
         id: 10
         name: 'foo'
         icon: 'bar.png'
-      scope.categories = [{}];
       $httpBackend.whenPOST '/api/categories'
         .respond 201, justCreated
       scope.addCategory()

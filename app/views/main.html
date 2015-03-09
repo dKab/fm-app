@@ -24,8 +24,8 @@
     </form>
     <!--TODO create directive combobox to combine functionality of select and text input -->
     <ul>
-      <li ng-repeat="operaion in operations">
-        {{  operation.amount }} ( {{ operation.category.name }} ) - {{ operation.date }}
+      <li ng-repeat="operation in operations">
+        {{ operation.amount < 0 ? operation.amount : '+' + operation.amount }} ( {{ operation.category.name }} ) - {{ operation.date | date : 'd MMM yyyy HH:mm' }}
         <!--TODO create filter for date to display it in informal format (2 days ago, 1 hour ago, etc.) -->
       </li>
     </ul>

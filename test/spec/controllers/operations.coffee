@@ -20,9 +20,9 @@ describe 'Controller: OperationsCtrl', ->
     $httpBackend = null
     beforeEach inject (_$httpBackend_) ->
       $httpBackend = _$httpBackend_
-      $httpBackend.expectGET '/api/operations'
-        .respond 200, ''
       $httpBackend.expectGET '/api/categories'
+      .respond 200, ''
+      $httpBackend.expectGET '/api/operations'
         .respond 200, ''
 
     it 'should send POST request to /api/operations with amount and category', ->

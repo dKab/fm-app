@@ -5,7 +5,9 @@ angular.module 'fmAppApp'
     $scope.categories = CategoryService.getCategories()
     $scope.addCategory = ->
       category = CategoryService.createCategory $scope.name
-      category.$save()
-      $scope.categories.push category
-      $scope.name = ''
+      category.$save (catObj) ->
+        CategoryService.addCategory catObj
+        $scope.name = ''
+      , (errors) ->
+          alert 'У вас уже есть категория с таким названием'
 

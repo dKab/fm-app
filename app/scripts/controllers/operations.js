@@ -1,5 +1,5 @@
 'use strict';
-angular.module('fmAppApp').controller('OperationsCtrl', function(Operation, CategoryService, $scope) {
+angular.module('fmAppApp').controller('OperationsCtrl', function(Operation, CategoryService, $scope, $filter) {
   $scope.operations = Operation.query();
   $scope.categories = CategoryService.getCategories();
   return $scope.addOperation = function() {
@@ -7,20 +7,29 @@ angular.module('fmAppApp').controller('OperationsCtrl', function(Operation, Cate
     if ($scope.category) {
       fields = {
         amount: $scope.amount,
-        category_id: $scope.category
+        category_id: $scope.category,
+        date: new Date().getTime()
       };
       operation = new Operation(fields);
-      operation.$save();
+      return operation.$save(function(op) {
+        return $scope.operations.unshift(op);
+      });
     } else if ($scope.newCategory) {
       category = CategoryService.createCategory($scope.newCategory);
-      category.$save(function(created) {
-        operation = new Operation({
+      return category.$save(function(created) {
+        CategoryService.addCategory(created);
+        fields = {
           amount: $scope.amount,
-          category_id: created.id
+          category_id: created.id,
+          date: new Date().getTime()
+        };
+        operation = new Operation(fields);
+        return operation.$save(function(op) {
+          return $scope.operations.unshift(op);
         });
-        return operation.$save();
+      }, function(errors) {
+        return alert('У вас уже есть категория с таким названием');
       });
     }
-    return $scope.operations.unshift(operation);
   };
 });

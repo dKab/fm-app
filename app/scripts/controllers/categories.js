@@ -4,8 +4,11 @@ angular.module('fmAppApp').controller('CategoriesCtrl', function(CategoryService
   return $scope.addCategory = function() {
     var category;
     category = CategoryService.createCategory($scope.name);
-    category.$save();
-    $scope.categories.push(category);
-    return $scope.name = '';
+    return category.$save(function(catObj) {
+      CategoryService.addCategory(catObj);
+      return $scope.name = '';
+    }, function(errors) {
+      return alert('У вас уже есть категория с таким названием');
+    });
   };
 });

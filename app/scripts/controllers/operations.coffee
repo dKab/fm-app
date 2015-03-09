@@ -10,14 +10,25 @@ angular.module 'fmAppApp'
         fields =
           amount: $scope.amount
           category_id: $scope.category
+          date: new Date().getTime()
         operation = new Operation fields
-        operation.$save()
+        operation.$save (op) ->
+          $scope.operations.unshift op
+
       else if $scope.newCategory
         category = CategoryService.createCategory $scope.newCategory
         category.$save (created) ->
-          operation = new Operation { amount: $scope.amount, category_id: created.id }
-          operation.$save()
-      $scope.operations.unshift operation
+          CategoryService.addCategory created
+          fields =
+            amount: $scope.amount
+            category_id: created.id
+            date: new Date().getTime()
+          operation = new Operation fields
+          operation.$save (op) ->
+            $scope.operations.unshift op
+        , (errors) ->
+            alert 'У вас уже есть категория с таким названием'
+
 
 
 
