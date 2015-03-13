@@ -23,7 +23,7 @@ describe('Controller: OperationsCtrl', function() {
       $httpBackend.expectGET('/api/categories').respond(200, '');
       return $httpBackend.expectGET('/api/operations').respond(200, '');
     }));
-    it('should send POST request to /api/operations with amount and category', function() {
+    xit('should send POST request to /api/operations with amount and category', function() {
       $httpBackend.expectPOST('/api/operations', {
         amount: -500,
         category_id: 123
@@ -33,7 +33,7 @@ describe('Controller: OperationsCtrl', function() {
       scope.addOperation();
       return $httpBackend.flush();
     });
-    it('should create category first if such category doesn\'t exist', function() {
+    xit('should create category first if such category doesn\'t exist', function() {
       $httpBackend.expectPOST('/api/categories', {
         name: 'new category'
       }).respond(201, {

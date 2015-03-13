@@ -1,5 +1,5 @@
 'use strict';
-angular.module('fmAppApp').controller('OperationsCtrl', function(Operation, CategoryService, $scope, $filter) {
+angular.module('fmAppApp').controller('OperationsCtrl', function(Operation, CategoryService, $scope) {
   $scope.operations = Operation.query();
   $scope.categories = CategoryService.getCategories();
   return $scope.addOperation = function() {
