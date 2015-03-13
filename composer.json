@@ -3,5 +3,15 @@
     "slim/slim": "2.*",
     "php-activerecord/php-activerecord": "dev-master",
     "firebase/php-jwt": "dev-master"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "npm install",
+      "$(npm bin -q)/bower install"
+    ],
+    "post-update-cmd": [
+      "npm install",
+      "$(npm bin -q)/bower install"
+    ]
   }
 }
