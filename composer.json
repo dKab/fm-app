@@ -7,11 +7,13 @@
   "scripts": {
     "post-install-cmd": [
       "npm install",
-      "$(npm bin -q)/bower install"
+      "npm i bower",
+      "bower install"
     ],
     "post-update-cmd": [
       "npm install",
-      "$(npm bin -q)/bower install"
+      "npm i bower",
+      "bower install"
     ]
   }
 }
