@@ -10,11 +10,13 @@ $app = new \Slim\Slim();
 $app->jwtKey ='3ewv2%eyufq!ib=-0@kdz194#a5t)3rtu!=a=)7sx=_-=6^q)r';
 $app->name = 'fm-app';
 
+//$dbopts = parse_url(getenv('DATABASE_URL'));
+
 ActiveRecord\Config::initialize(function($cfg)
  {
      $cfg->set_model_directory('models');
      $cfg->set_connections([
-        'development' => 'mysql://finance_manager:123456@localhost/finance_manager']);
+        'development' => getenv('DATABASE_URL')]);
  });
 
   $app->post('/signup', function () use ($app) {
