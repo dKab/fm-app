@@ -2,7 +2,7 @@
 ini_set("log_errors", 1);
 ini_set("error_log", "php://stderr");
 
-require 'vendor/autoload.php';
+require '../../vendor/autoload.php';
 require_once 'JSONUtils.php';
 require_once 'AuthHelper.php';
 
