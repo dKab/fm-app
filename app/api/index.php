@@ -1,6 +1,6 @@
 <?php
 ini_set("log_errors", 1);
-ini_set("error_log", $_SERVER['DOCUMENT_ROOT'].'/log.txt');
+ini_set("error_log", "php://stderr");
 
 require 'vendor/autoload.php';
 require_once 'JSONUtils.php';
