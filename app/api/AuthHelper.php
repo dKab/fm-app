@@ -1,6 +1,6 @@
 <?php
-require_once 'vendor/slim/slim/Slim/Slim.php';
-require_once 'vendor/firebase/php-jwt/Firebase/PHP-JWT/Authentication/JWT.php';
+require_once '../../vendor/slim/slim/Slim/Slim.php';
+require_once '../../vendor/firebase/php-jwt/Firebase/PHP-JWT/Authentication/JWT.php';
 
 class AuthHelper {
 
