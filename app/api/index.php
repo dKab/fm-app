@@ -15,7 +15,7 @@ ActiveRecord\Config::initialize(function($cfg)
      $cfg->set_model_directory('models');
      $cfg->set_connections([
         'development' => 'mysql://finance_manager:123456@localhost/finance_manager',
-        'production' => ''
+        'production' => getenv('DATABASE_URL')
         ]);
       $cfg->set_default_connection('development');
  });
