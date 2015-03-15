@@ -1,6 +1,6 @@
 <?php
-require_once 'vendor/php-activerecord/php-activerecord/lib/Utils.php';
-require_once 'vendor/slim/slim/Slim/Slim.php';
+require_once '../../vendor/php-activerecord/php-activerecord/lib/Utils.php';
+require_once '../../vendor/slim/slim/Slim/Slim.php';
 use \ActiveRecord\Utils as Utils;
 
 class JSONUtils extends Utils {

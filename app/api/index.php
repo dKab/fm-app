@@ -2,7 +2,7 @@
 ini_set("log_errors", 1);
 ini_set("error_log", $_SERVER['DOCUMENT_ROOT'].'/log.txt');
 
-require 'vendor/autoload.php';
+require '../../vendor/autoload.php';
 require_once 'JSONUtils.php';
 require_once 'AuthHelper.php';
 
@@ -14,7 +14,10 @@ ActiveRecord\Config::initialize(function($cfg)
  {
      $cfg->set_model_directory('models');
      $cfg->set_connections([
-        'development' => 'mysql://finance_manager:123456@localhost/finance_manager']);
+        'development' => 'mysql://finance_manager:123456@localhost/finance_manager',
+        'production' => ''
+        ]);
+      $cfg->set_default_connection('development');
  });
 
   $app->post('/signup', function () use ($app) {
