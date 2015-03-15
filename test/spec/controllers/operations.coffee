@@ -1,12 +1,17 @@
 'use strict'
 
 describe 'Controller: OperationsCtrl', ->
-  scope = ctrl = null
+  scope = ctrl = $httpBackend = null
   beforeEach module 'fmAppApp'
 
-  beforeEach inject ($controller, $rootScope) ->
+  beforeEach inject ($controller, $rootScope, _$httpBackend_) ->
     scope = $rootScope.$new()
     ctrl = $controller 'OperationsCtrl', {$scope: scope}
+    $httpBackend = _$httpBackend_
+    $httpBackend.expectGET '/api/categories'
+    .respond 200, ''
+    $httpBackend.expectGET '/api/operations'
+    .respond 200, ''
 
   it 'should attach list of operations to the scope', ->
     expect scope.operations
@@ -17,13 +22,6 @@ describe 'Controller: OperationsCtrl', ->
       .toEqual jasmine.any Array
 
   describe 'addOperation method', ->
-    $httpBackend = null
-    beforeEach inject (_$httpBackend_) ->
-      $httpBackend = _$httpBackend_
-      $httpBackend.expectGET '/api/categories'
-      .respond 200, ''
-      $httpBackend.expectGET '/api/operations'
-        .respond 200, ''
 
     xit 'should send POST request to /api/operations with amount and category', ->
       $httpBackend.expectPOST '/api/operations', {amount: -500, category_id: 123}
@@ -59,6 +57,25 @@ describe 'Controller: OperationsCtrl', ->
       $httpBackend.flush()
       expect angular.equals newlyCreated, scope.operations[0]
         .toBe true
+
+  describe 'remove method', ->
+    it 'should send DELETE request with operation id to /api/operations', ->
+      $httpBackend.expectDELETE '/api/operations/5'
+        .respond 204, ''
+      scope.remove(5);
+      $httpBackend.flush()
+
+    it 'should remove operation with particular id from operations array', ->
+      scope.operations = [{id: 10, amount: -300}, {id: 5, amount: 100}]
+      scope.remove(5)
+      expect scope.operations
+        .toEqual [{id: 10, amount: -300}]
+
+
+
+
+
+
 
 
 

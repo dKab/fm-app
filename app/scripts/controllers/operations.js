@@ -2,7 +2,7 @@
 angular.module('fmAppApp').controller('OperationsCtrl', function(Operation, CategoryService, $scope) {
   $scope.operations = Operation.query();
   $scope.categories = CategoryService.getCategories();
-  return $scope.addOperation = function() {
+  $scope.addOperation = function() {
     var category, fields, operation;
     if ($scope.category) {
       fields = {
@@ -31,5 +31,13 @@ angular.module('fmAppApp').controller('OperationsCtrl', function(Operation, Cate
         return alert('У вас уже есть категория с таким названием');
       });
     }
+  };
+  return $scope.remove = function(id) {
+    Operation.remove({
+      id: id
+    });
+    return $scope.operations = $scope.operations.filter(function(op) {
+      return op.id !== id;
+    });
   };
 });

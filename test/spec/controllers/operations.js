@@ -1,13 +1,16 @@
 'use strict';
 describe('Controller: OperationsCtrl', function() {
-  var ctrl, scope;
-  scope = ctrl = null;
+  var $httpBackend, ctrl, scope;
+  scope = ctrl = $httpBackend = null;
   beforeEach(module('fmAppApp'));
-  beforeEach(inject(function($controller, $rootScope) {
+  beforeEach(inject(function($controller, $rootScope, _$httpBackend_) {
     scope = $rootScope.$new();
-    return ctrl = $controller('OperationsCtrl', {
+    ctrl = $controller('OperationsCtrl', {
       $scope: scope
     });
+    $httpBackend = _$httpBackend_;
+    $httpBackend.expectGET('/api/categories').respond(200, '');
+    return $httpBackend.expectGET('/api/operations').respond(200, '');
   }));
   it('should attach list of operations to the scope', function() {
     return expect(scope.operations).toEqual(jasmine.any(Array));
@@ -15,14 +18,7 @@ describe('Controller: OperationsCtrl', function() {
   it('should attach list of categories to the scope', function() {
     return expect(scope.categories).toEqual(jasmine.any(Array));
   });
-  return describe('addOperation method', function() {
-    var $httpBackend;
-    $httpBackend = null;
-    beforeEach(inject(function(_$httpBackend_) {
-      $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('/api/categories').respond(200, '');
-      return $httpBackend.expectGET('/api/operations').respond(200, '');
-    }));
+  describe('addOperation method', function() {
     xit('should send POST request to /api/operations with amount and category', function() {
       $httpBackend.expectPOST('/api/operations', {
         amount: -500,
@@ -67,6 +63,31 @@ describe('Controller: OperationsCtrl', function() {
       scope.addOperation();
       $httpBackend.flush();
       return expect(angular.equals(newlyCreated, scope.operations[0])).toBe(true);
+    });
+  });
+  return describe('remove method', function() {
+    it('should send DELETE request with operation id to /api/operations', function() {
+      $httpBackend.expectDELETE('/api/operations/5').respond(204, '');
+      scope.remove(5);
+      return $httpBackend.flush();
+    });
+    return it('should remove operation with particular id from operations array', function() {
+      scope.operations = [
+        {
+          id: 10,
+          amount: -300
+        }, {
+          id: 5,
+          amount: 100
+        }
+      ];
+      scope.remove(5);
+      return expect(scope.operations).toEqual([
+        {
+          id: 10,
+          amount: -300
+        }
+      ]);
     });
   });
 });

@@ -74,12 +74,23 @@ ActiveRecord\Config::initialize(function($cfg)
          }
      });
 
-     $app->delete('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
-
-
+     $app->delete('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
+          try {
+            $operation = Operation::find($id);
+            if (true == $operation->delete()) {
+              $app->response->status(204);
+            } else {
+              throw new Exception((string)$operation->errors);
+            }
+          } catch(RecordNotFound $e) {
+              $app->response->status(404);
+          } catch(Exception $e) {
+              $app->response->status(400);
+              $app->response()->header('X-Status-Reason', $e->getMessage());
+          }
      });
 
-     $app->put('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function() use ($app) {
+     $app->put('/operations/:id', function() { AuthHelper::checkAuthorized(); }, function($id) use ($app) {
 
 
      });

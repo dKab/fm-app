@@ -11,7 +11,6 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
   }
 }
 
-
 @import "sticky-footer";
 
 form[name=signup], form[name=login] {
@@ -29,7 +28,17 @@ form[name=signup], form[name=login] {
       @include validation-highlight($state-success-text);
     }
   }
+
+  input, select {
+    margin: 10px 0 !important;
+  }
+
 }
+
+input, select {
+  @extend .form-control;
+}
+
 a {
   outline: none;
   cursor: pointer;
@@ -54,12 +63,77 @@ a {
   text-align: center;
 }
 
-input, select {
-  @extend .form-control;
-  margin: 10px 0 !important;
-}
 .tab-pane {
   padding-top: 20px;
 }
 
+
+ul {
+  padding-left: 0;
+}
+
+
+#operations, #categories {
+
+  ul {
+    margin-top: 15px;
+  }
+
+  @media all and (max-width: $screen-xs) {
+    button {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  li {
+    padding: 5px 0;
+    list-style: none;
+
+    .negative {
+      color: $brand-danger;
+    }
+    .positive {
+      color: $brand-success;
+    }
+
+    .glyphicon {
+      display: inline-block;
+      padding: 0 5px;
+      cursor: pointer;
+    }
+
+    @media (max-width: $screen-sm) {
+
+      border-top: 1px solid $gray-lighter;
+      &:first-child {
+        border-top: none;
+      }
+      @include clearfix;
+
+      .actions {
+        float: right;
+      }
+    }
+
+
+    .form-inline .form-group {
+      margin-bottom: 15px !important;
+      margin-top: 15px !important;
+    }
+
+    .glyphicon-remove {
+      color: $brand-danger;
+      &:hover {
+        color: darken($brand-danger, 10%);
+      }
+    }
+    .glyphicon-pencil {
+      color: $brand-primary;
+      &:hover {
+        color: darken($brand-primary, 10%);
+      }
+    }
+  }
+}
 

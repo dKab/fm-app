@@ -29,6 +29,9 @@ angular.module 'fmAppApp'
         , (errors) ->
             alert 'У вас уже есть категория с таким названием'
 
+    $scope.remove = (id) ->
+      Operation.remove {id: id}
+       $scope.operations = (op for op in $scope.operations when op.id isnt id)
 
 
 
