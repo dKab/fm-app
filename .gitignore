@@ -5,3 +5,4 @@ dist
 app/bower_components
 app/api/vendor/
 .idea/
+vendor/
