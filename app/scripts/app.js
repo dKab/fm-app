@@ -10,6 +10,8 @@
  */
 angular
   .module('fmAppApp', [
+    'ui.select',
+    'angular-underscore',
     'ngAnimate',
     'ngCookies',
     'ngResource',

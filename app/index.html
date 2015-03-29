@@ -5,6 +5,7 @@
     <title>Finance manager</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css"/>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -37,14 +38,20 @@
         <p><span class="glyphicon glyphicon-heart"></span> from the FM team</p>
       </div>
     </div>
-
     <!-- build:js(.) scripts/oldieshim.js -->
     <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.js"></script>
+    <script>
+      document.createElement('ui-select');
+      document.createElement('ui-select-match');
+      document.createElement('ui-select-choices');
+    </script>
     <![endif]-->
     <!-- endbuild -->
-
+    <script src="bower_components/underscore/underscore.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -58,9 +65,12 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="bower_components/angular-underscore/angular-underscore.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="bower_components/angular-mocks/angular-mocks.js"></script>
         <script src="scripts/resources.js"></script>
         <script src="scripts/services/Category.js"></script>
         <script src="scripts/controllers/operations.js"></script>

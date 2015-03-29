@@ -14,7 +14,10 @@ angular.module('fmAppApp')
       link: function postLink(scope, element, attrs, ctrl) {
         var me = attrs.ngModel,
             matchTo = attrs.valueMatch;
-        scope.$watchGroup([me, matchTo], function() {
+        console.log(matchTo);
+        scope.$watchGroup([matchTo, me], function() {
+          console.log('verify: ', scope[me]);
+          console.log('orig: ', scope[matchTo]);
           ctrl.$setValidity('valueMatch', scope[me] === scope[matchTo]);
         });
       }
