@@ -17,9 +17,9 @@ describe('ValueMatch directive', function() {
         tween = element(by.model('verify'));
 
     expect(hasClass(tween, 'ng-invalid-value-match')).toBe(false);
-    orig.sendKeys(123);
+    tween.sendKeys(123456);
     expect(hasClass(tween, 'ng-invalid-value-match')).toBe(true);
-    tween.sendKeys(123);
+    orig.sendKeys(123456);
     expect(hasClass(tween, 'ng-invalid-value-match')).toBe(false);
     tween.clear();
     expect(hasClass(tween, 'ng-invalid-value-match')).toBe(true);

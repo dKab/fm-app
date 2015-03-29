@@ -15,25 +15,24 @@
       <div class="form-group">
         <label class="sr-only" for="amount">Сумма (в рублях)</label>
         <div class="input-group">
-          <div class="input-group-addon"><span class="glyphicon glyphicon-ruble"></span></div>
           <input type="number" class="form-control" ng-model="amount" placeholder="-100" id="amount" />
+          <div class="input-group-addon">руб.</div>
         </div>
       </div>
       <div class="form-group">
-        <select ng-model="category" >
-          <option value="">выбрать категорию...</option>
-          <option value="{{ category.id }}" ng-repeat="category in categories">{{ category.name }}</option>
-        </select>
+        <ui-select  ng-model="category.selected" theme="bootstrap" style="width:300px;" title="Choose a category">
+          <ui-select-match placeholder="Выберите категорию...">{{ (category.selected.id) ? category.selected.name : category.selected.name + " (будет создана)" }}</ui-select-match>
+          <ui-select-choices refresh="addNewObj($select.search)" refresh-delay="0" repeat="category in categories | filter: {name: $select.search}">
+            <div ng-if="!category.id" ng-bind-html="category.name + ' (будет создана)' | highlight: $select.search"></div>
+            <div ng-if="category.id" ng-bind-html="category.name | highlight: $select.search"></div>
+          </ui-select-choices>
+        </ui-select>
       </div>
-        <div class="form-group">
-          <input type="text"  ng-show="!category" placeholder="Новая категория" ng-model="newCategory"/>
-        </div>
       <div class="form-group">
-        <button ng-click="addOperation()" class="btn btn-primary" ng-disabled="!newCategory && !category || !amount">Добавить</button>
+        <button ng-click="addOperation()" class="btn btn-primary" ng-disabled="!amount">Добавить</button>
       </div>
     </form>
-    <!--TODO create directive combobox to combine functionality of select and text input -->
-    <ul>
+    <ul class="items">
       <li ng-repeat="operation in operations">
         <span ng-class="{ negative: (operation.amount < 0), positive: (operation.amount > 0) }" >{{ operation.amount < 0 ? operation.amount : '+' + operation.amount }}</span> ( {{ operation.category.name }} ) - {{ operation.date | date : 'd MMM yyyy HH:mm' }}
         <span class="actions">
@@ -54,7 +53,7 @@
         <button class="btn btn-primary" ng-click="addCategory()" ng-disabled="!name">Добавить</button>
       </div>
     </form>
-    <ul>
+    <ul class="items">
       <li ng-repeat="category in categories" >{{category.name }}</li>
     </ul>
   </div>

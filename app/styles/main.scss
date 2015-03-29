@@ -75,7 +75,7 @@ ul {
 
 #operations, #categories {
 
-  ul {
+  ul.items {
     margin-top: 15px;
   }
 
@@ -134,6 +134,12 @@ ul {
         color: darken($brand-primary, 10%);
       }
     }
+  }
+}
+@media all and (min-width: $screen-sm) {
+  .form-inline .ui-select-match .form-control,
+  .form-inline .ui-select-container input.form-control {
+    width: 100%;
   }
 }
 
